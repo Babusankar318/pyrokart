@@ -1,0 +1,20 @@
+{
+  "name": "PyroKart Operations",
+  "short_name": "PyroKart",
+  "description": "Pickup-only firecracker marketplace for sellers, buyers, and admins.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f7f6",
+  "theme_color": "#132224",
+  "categories": ["business", "shopping", "productivity"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
