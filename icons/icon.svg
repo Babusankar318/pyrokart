@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#132224"/>
+  <rect x="121" y="122" width="270" height="270" rx="42" fill="#d99c2f"/>
+  <rect x="157" y="164" width="198" height="184" rx="24" fill="#cf4635"/>
+  <path d="M183 212h146M183 300h146" stroke="#fff3d8" stroke-width="28" stroke-linecap="round"/>
+  <path d="M256 76v62M256 374v62M76 256h62M374 256h62" stroke="#8abbb5" stroke-width="24" stroke-linecap="round"/>
+  <text x="256" y="276" text-anchor="middle" font-family="Arial, sans-serif" font-size="78" font-weight="800" fill="#fff3d8">PK</text>
+</svg>
