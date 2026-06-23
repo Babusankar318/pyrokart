@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#132224" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="PyroKart" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>PyroKart Operations</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">PK</div>
+          <div>
+            <p class="eyebrow">Pickup-only marketplace</p>
+            <h1>PyroKart</h1>
+          </div>
+        </div>
+
+        <nav class="role-tabs" aria-label="Platform views">
+          <button class="role-tab active" type="button" data-view="seller" title="Seller platform">
+            <span aria-hidden="true">S</span>
+            Seller
+          </button>
+          <button class="role-tab" type="button" data-view="buyer" title="Buyer platform">
+            <span aria-hidden="true">B</span>
+            Buyer
+          </button>
+          <button class="role-tab" type="button" data-view="admin" title="Admin panel">
+            <span aria-hidden="true">A</span>
+            Admin
+          </button>
+        </nav>
+
+        <section class="status-panel" aria-label="Compliance snapshot">
+          <p class="eyebrow">Marketplace status</p>
+          <div class="status-row">
+            <span>Pickup mode</span>
+            <strong>Enabled</strong>
+          </div>
+          <div class="status-row">
+            <span>Age check</span>
+            <strong>Required</strong>
+          </div>
+          <div class="status-row">
+            <span>Seller license</span>
+            <strong>Verified</strong>
+          </div>
+        </section>
+      </aside>
+
+      <main>
+        <section class="view active" id="seller-view" aria-labelledby="seller-title">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">Seller platform</p>
+              <h2 id="seller-title">Manage inventory, pickup slots, and reservations</h2>
+            </div>
+            <button class="primary-action" type="button" id="seed-demo">Reset demo data</button>
+          </header>
+
+          <div class="metrics-grid" id="seller-metrics"></div>
+
+          <section class="work-area two-column">
+            <form class="tool-panel" id="listing-form">
+              <div class="panel-heading">
+                <h3>Add firecracker listing</h3>
+                <p>Every listing stays hidden from buyers until admin approval.</p>
+              </div>
+              <label>
+                Product name
+                <input name="name" required maxlength="40" placeholder="10 cm sparklers" />
+              </label>
+              <div class="form-grid">
+                <label>
+                  Category
+                  <select name="category">
+                    <option>Sparklers</option>
+                    <option>Flower pots</option>
+                    <option>Ground chakkars</option>
+                    <option>Fountains</option>
+                    <option>Gift boxes</option>
+                  </select>
+                </label>
+                <label>
+                  Stock
+                  <input name="stock" required type="number" min="1" max="500" value="20" />
+                </label>
+              </div>
+              <div class="form-grid">
+                <label>
+                  Price
+                  <input name="price" required type="number" min="1" value="199" />
+                </label>
+                <label>
+                  Safety class
+                  <select name="safetyClass">
+                    <option>Low noise</option>
+                    <option>Adult supervised</option>
+                    <option>Outdoor only</option>
+                  </select>
+                </label>
+              </div>
+              <label>
+                Pickup window
+                <input name="pickupWindow" required placeholder="5:00 PM - 9:00 PM" />
+              </label>
+              <button class="primary-action full" type="submit">Submit for approval</button>
+            </form>
+
+            <section class="tool-panel">
+              <div class="panel-heading row">
+                <div>
+                  <h3>Seller inventory</h3>
+                  <p>Approved items appear in the buyer catalog.</p>
+                </div>
+                <select id="inventory-filter" aria-label="Filter inventory">
+                  <option value="all">All</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Paused">Paused</option>
+                </select>
+              </div>
+              <div class="item-list" id="inventory-list"></div>
+            </section>
+          </section>
+
+          <section class="tool-panel full-width">
+            <div class="panel-heading row">
+              <div>
+                <h3>Pickup reservations</h3>
+                <p>Orders are collected in person after identity and age verification.</p>
+              </div>
+              <span class="badge">No delivery queue</span>
+            </div>
+            <div class="reservation-table" id="seller-orders"></div>
+          </section>
+        </section>
+
+        <section class="view" id="buyer-view" aria-labelledby="buyer-title">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">Buyer platform</p>
+              <h2 id="buyer-title">Reserve approved items for store pickup</h2>
+            </div>
+            <div class="buyer-tools">
+              <input id="catalog-search" type="search" placeholder="Search catalog" aria-label="Search catalog" />
+              <select id="category-filter" aria-label="Filter category">
+                <option value="all">All categories</option>
+                <option>Sparklers</option>
+                <option>Flower pots</option>
+                <option>Ground chakkars</option>
+                <option>Fountains</option>
+                <option>Gift boxes</option>
+              </select>
+            </div>
+          </header>
+
+          <div class="buyer-grid">
+            <section class="catalog" id="catalog-list" aria-label="Product catalog"></section>
+            <aside class="tool-panel checkout-panel" aria-label="Pickup reservation">
+              <div class="panel-heading">
+                <h3>Pickup cart</h3>
+                <p>Buyer must collect from seller location. Delivery is unavailable.</p>
+              </div>
+              <div class="cart-list" id="cart-list"></div>
+              <div class="checkout-total">
+                <span>Total</span>
+                <strong id="cart-total">₹0</strong>
+              </div>
+              <label class="check-row">
+                <input type="checkbox" id="age-confirm" />
+                I confirm the buyer is legally eligible and will bring ID.
+              </label>
+              <button class="primary-action full" type="button" id="reserve-cart">Reserve pickup</button>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="admin-view" aria-labelledby="admin-title">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">Admin panel</p>
+              <h2 id="admin-title">Review sellers, listings, and pickup compliance</h2>
+            </div>
+          </header>
+
+          <div class="metrics-grid" id="admin-metrics"></div>
+
+          <section class="work-area two-column">
+            <section class="tool-panel">
+              <div class="panel-heading">
+                <h3>Listing approval queue</h3>
+                <p>Check product type, stock, price, pickup window, and safety class.</p>
+              </div>
+              <div class="item-list" id="approval-list"></div>
+            </section>
+
+            <section class="tool-panel">
+              <div class="panel-heading">
+                <h3>Seller compliance</h3>
+                <p>Only verified sellers can accept reservations.</p>
+              </div>
+              <div class="seller-card">
+                <div>
+                  <strong>Raman Pyro Mart</strong>
+                  <span>License: TN-FW-2026-0184</span>
+                </div>
+                <button class="ghost-action" type="button">View file</button>
+              </div>
+              <div class="seller-card">
+                <div>
+                  <strong>Festival Spark House</strong>
+                  <span>License review pending</span>
+                </div>
+                <button class="warning-action" type="button">Hold store</button>
+              </div>
+            </section>
+          </section>
+
+          <section class="tool-panel full-width">
+            <div class="panel-heading row">
+              <div>
+                <h3>Recent marketplace activity</h3>
+                <p>Admin sees pickup reservations and stock movements across the platform.</p>
+              </div>
+            </div>
+            <div class="reservation-table" id="admin-orders"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+    <script>
+      if ("serviceWorker" in navigator && location.protocol !== "file:") {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("service-worker.js");
+        });
+      }
+    </script>
+  </body>
+</html>
